@@ -2,7 +2,8 @@ const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
 const app = express();
-
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, "../public");
 const viewsPath = path.join(__dirname, "../templates/views");
@@ -39,15 +40,35 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-  res.send({
-    forecast: "It is snowing",
-    location: "Philadelphia",
+  if (!req.query.adress) {
+    return res.send({ error: "You must provide an adress" });
+  }
+  geocode(req.query.adress, (err, { latitude, longitude }) => {
+    if (err) {
+      return res.send({
+        error: err,
+        adress: req.query.adress,
+      });
+    }
+    forecast(latitude, longitude, (error, weather) => {
+      if (error) {
+        return res.send({
+          error: error,
+          adress: req.query.adress,
+        });
+      }
+      res.send({
+        weather,
+        adress: req.query.adress,
+      });
+    });
   });
 });
 
-app.get("/help/**", (req, res) => {
+app.get("/help/*", (req, res) => {
   res.render("error", { error: "sorry, help page isn't found." });
 });
+
 app.get("*", (req, res) => {
   res.render("error", { error: "sorry, for the 404 ..." });
 });
