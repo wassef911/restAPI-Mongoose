@@ -5,6 +5,8 @@ const forecast = (latitude, longitude, callback) => {
   const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
 
   request({ url, json: true }, (error, { body }) => {
+    console.log(url);
+
     if (error) {
       callback("Unable to connect to weather service!", undefined);
     } else if (!body.weather) {
@@ -12,7 +14,10 @@ const forecast = (latitude, longitude, callback) => {
     } else {
       callback(
         undefined,
-        `The weather in ${body.name} is ${body.weather[0].description} and the temperature : ${body.main.temp}`
+        `The weather in ${body.name} is ${
+          body.weather[0].description
+        }, the temperature : ${body.main.temp - 273.15}°C
+        and the wind speed : ${body.wind.speed}meter/sec`
       );
     }
   });
