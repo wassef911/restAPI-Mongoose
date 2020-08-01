@@ -13,7 +13,6 @@
   "dependencies": {
     "express": "^4.16.4",
     "hbs": "^4.1.1",
-    "mongodb": "^3.5.9",
     "request": "^2.88.2"
   },
   "devDependencies": {
