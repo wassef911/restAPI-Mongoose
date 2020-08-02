@@ -5,10 +5,6 @@ const databaseName = "task-manager";
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (err, client) => {
   if (err) return console.log("Unable to connect to DB .");
   console.log("connected!");
-  const db = client.db(databaseName);
-  db.collection("user").updateOne({
-    _id,
-  });
 });
 // CRUD
 /*
@@ -43,4 +39,44 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (err, client) => {
     });
 });
 
+*/
+
+/*
+    UPDATE
+
+  db.collection("user")
+    .updateMany(
+      {
+        age: {
+          $eq: 27,
+        },
+      },
+      {
+        $inc: {
+          age: 5,
+        },
+      }
+    )
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+*/
+
+/*
+    DELETE 
+
+      const db = client.db(databaseName);
+
+  db.collection("user")
+    .deleteMany({ age: 28 })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 */
