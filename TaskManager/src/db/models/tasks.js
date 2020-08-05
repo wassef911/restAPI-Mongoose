@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const Tasks = mongoose.model("Tasks", {
   description: { type: String, required: true, trim: true },
   completed: {
@@ -7,5 +6,4 @@ const Tasks = mongoose.model("Tasks", {
     default: false,
   },
 });
-
 module.exports = Tasks;
