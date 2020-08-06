@@ -1,5 +1,4 @@
-const notValid = (reqBody, allowUpdates) => {
-  const updates = Object.keys(reqBody); // returns an array of strings
+const notValid = (updates, allowUpdates) => {
   for (let i in updates) {
     if (!allowUpdates.includes(updates[i])) {
       return true;
