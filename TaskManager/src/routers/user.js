@@ -1,9 +1,19 @@
 const express = require("express");
 const User = require("../db/models/user");
-const userRouter = new express.Router();
+const router = new express.Router();
 const notValid = require("../utils");
 
-userRouter.post("/users", async (req, res) => {
+router.get("/users", async (req, res) => {
+  // get users
+  try {
+    const users = await User.find({});
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+router.post("/users", async (req, res) => {
   // add user
   try {
     const user = await new User(req.body).save();
@@ -13,7 +23,20 @@ userRouter.post("/users", async (req, res) => {
   }
 });
 
-userRouter.patch("/users/:id", async (req, res) => {
+router.post("/users/login", async (req, res) => {
+  // add user
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    res.send(user);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+router.patch("/users/:id", async (req, res) => {
   // update user
   const updates = Object.keys(req.body);
   if (notValid(updates, ["name", "age", "password"]))
@@ -36,17 +59,7 @@ userRouter.patch("/users/:id", async (req, res) => {
   }
 });
 
-userRouter.get("/users", async (req, res) => {
-  // get users
-  try {
-    const users = await User.find({});
-    res.status(200).send(users);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-userRouter.get("/users/:id", async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   // get user by id
   const _id = req.params.id;
   try {
@@ -58,7 +71,7 @@ userRouter.get("/users/:id", async (req, res) => {
   }
 });
 
-userRouter.delete("/users/:id", async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
   // delete user by id
   const _id = req.params.id;
   try {
@@ -71,4 +84,4 @@ userRouter.delete("/users/:id", async (req, res) => {
   }
 });
 
-module.exports = userRouter;
+module.exports = router;
