@@ -1,7 +1,7 @@
 const express = require("express");
 const tasksRouter = new express.Router();
-const notValid = require("../utils");
-const Task = require("../db/models/tasks");
+const notValid = require("../../utils");
+const Task = require("../models/tasks");
 
 tasksRouter.post("/tasks", async (req, res) => {
   // add task

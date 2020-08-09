@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true, lowercase: true },
@@ -34,9 +35,28 @@ const userSchema = new mongoose.Schema({
       if (value < 0) throw new Error("Age is a postive number.");
     },
   },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
+userSchema.methods.giveAuthToken = async function () {
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, "secret");
+
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
+
+  return token;
+};
+
 userSchema.statics.findByCredentials = async (email, password) => {
+  // method to login user by email and password
   const user = await User.findOne({ email });
   if (!user) throw new Error("Unable to login!");
 
@@ -44,11 +64,10 @@ userSchema.statics.findByCredentials = async (email, password) => {
   if (!isMatch) throw new Error("Password or email problem!");
   return user;
 };
-// hash the plain text password before saving
+
 userSchema.pre("save", async function (next) {
-  // run code before the user is saved
+  // hash the plain text password before saving
   const user = this;
-  console.log("just before saving!");
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
