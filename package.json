@@ -1,5 +1,5 @@
 {
-  "name": "TaskManager",
+  "name": "RestAPI",
   "version": "1.0.0",
   "description": "",
   "main": "mongodb.js",
