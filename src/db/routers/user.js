@@ -52,11 +52,12 @@ router.post("/users/logout", auth, async (req, res) => {
 });
 
 router.post("/users/logoutAll", auth, async (req, res) => {
+  // logout from all accounts
   try {
     req.user.tokens = [];
     await req.user.save();
     console.log("user logged out all accounts.");
-    res.send();
+    return res.send();
   } catch (err) {
     res.status(500).send();
   }
@@ -80,9 +81,9 @@ router.delete("/users/me", auth, async (req, res) => {
   // delete account
   try {
     await req.user.remove();
-    return res.status(200).send(req.user);
+    return res.send(req.user);
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 });
 
