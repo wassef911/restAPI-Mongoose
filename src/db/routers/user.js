@@ -1,10 +1,14 @@
 const express = require("express");
+const multer = require("multer");
 
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 const Valid = require("../../utils");
 
 const router = new express.Router();
+const upload = multer({
+  dest: "avatars",
+});
 
 router.get("/users/me", auth, async (req, res) => {
   // get user profile
@@ -85,6 +89,10 @@ router.delete("/users/me", auth, async (req, res) => {
   } catch (err) {
     return res.status(500).send(err);
   }
+});
+
+router.post("/users/me/avatar", upload.single("avatar"), (req, res) => {
+  res.send();
 });
 
 module.exports = router;
