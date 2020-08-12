@@ -8,7 +8,27 @@ const Valid = require("../../utils");
 const router = new express.Router();
 const upload = multer({
   dest: "avatars",
+  limits: {
+    fileSize: 1000000, // size in MB
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error("Please upload a valid image."));
+    }
+    cb(undefined, true);
+  },
 });
+
+router.post(
+  "/users/me/avatar",
+  upload.single("avatar"),
+  (req, res) => {
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+);
 
 router.get("/users/me", auth, async (req, res) => {
   // get user profile
@@ -89,10 +109,6 @@ router.delete("/users/me", auth, async (req, res) => {
   } catch (err) {
     return res.status(500).send(err);
   }
-});
-
-router.post("/users/me/avatar", upload.single("avatar"), (req, res) => {
-  res.send();
 });
 
 module.exports = router;
