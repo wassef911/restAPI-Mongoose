@@ -1,5 +1,5 @@
 {
-  "name": "RestAPI",
+  "name": "restAPI-Mongoose",
   "version": "1.0.0",
   "description": "",
   "main": "mongodb.js",
