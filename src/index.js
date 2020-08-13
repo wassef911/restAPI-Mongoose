@@ -1,8 +1,8 @@
 const express = require("express");
 
 require("./db/mongoosedb");
-const userRouter = require("./db/routers/user");
-const tasksRouter = require("./db/routers/tasks");
+const userRouter = require("./routers/user");
+const tasksRouter = require("./routers/tasks");
 
 const app = express();
 const port = process.env.PORT;

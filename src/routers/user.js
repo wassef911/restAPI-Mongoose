@@ -3,9 +3,10 @@ const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const sharp = require("sharp");
 
-const User = require("../models/user");
-const auth = require("../middleware/auth");
-const Valid = require("../../utils");
+const User = require("../db/models/user");
+const auth = require("../db/middleware/auth");
+const Valid = require("../utils");
+
 const { sendWelcomeEmail, sendCancelEmail } = require("../emails/account");
 
 const router = new express.Router();

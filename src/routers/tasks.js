@@ -1,8 +1,8 @@
 const express = require("express");
 
-const auth = require("../middleware/auth");
-const Valid = require("../../utils");
-const Task = require("../models/tasks");
+const auth = require("../db/middleware/auth");
+const Valid = require("../utils");
+const Task = require("../db/models/tasks");
 
 const router = new express.Router();
 
