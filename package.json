@@ -4,7 +4,7 @@
   "description": "",
   "main": "mongodb.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "env-cmd -f dev.env nodemon src/index.js",
     "start": "node src/index.js"
   },
   "keywords": [],
