@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema(
 // methods to add method on user object
 userSchema.methods.giveAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "secret");
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_KEY);
 
   user.tokens = user.tokens.concat({ token });
   await user.save();

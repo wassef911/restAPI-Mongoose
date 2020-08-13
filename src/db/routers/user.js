@@ -53,7 +53,7 @@ router.post("/users/me/avatar", upload.single("avatar"), async (req, res) => {
   try {
     // auth without the middleware
     const token = req.header("Authorization").replace("Bearer ", "");
-    const decoded = jwt.verify(token, "secret");
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
     let user = await User.findOne({
       _id: decoded._id,
       "tokens.token": token,
@@ -84,7 +84,7 @@ router.post("/users", async (req, res) => {
     const user = await new User(req.body);
     const token = await user.giveAuthToken();
     await user.save();
-    sendWelcomeEmail(user.name, user.email);
+    await sendWelcomeEmail(user.email, user.name);
     res.status(200).send({ user, token });
   } catch (err) {
     res.status(400).send(err);
@@ -150,7 +150,7 @@ router.delete("/users/me", auth, async (req, res) => {
   // delete account
   try {
     await req.user.remove();
-    sendCancelEmail(req.user.name, req.user.email);
+    await sendCancelEmail(req.user.email, req.user.name);
     return res.send(req.user);
   } catch (err) {
     return res.status(500).send(err);

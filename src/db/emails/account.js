@@ -28,7 +28,7 @@ const sendCancelEmail = async (email, name) => {
       text: "We hope you comeback bro! ",
     };
     await sgMail.send(msg);
-    console.log("Welcome Email sent.");
+    console.log("Cancel Email sent.");
   } catch (error) {
     console.log(error.response.body);
   }
