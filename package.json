@@ -2,7 +2,7 @@
   "name": "restAPI-Mongoose",
   "version": "1.0.0",
   "description": "",
-  "main": "mongodb.js",
+  "main": "index.js",
   "scripts": {
     "dev": "env-cmd -f dev.env nodemon src/index.js",
     "start": "node src/index.js"

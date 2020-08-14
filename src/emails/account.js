@@ -23,7 +23,7 @@ const sendCancelEmail = async (email, name) => {
 
     const msg = {
       to: email,
-      from: "1.wassef911@gmail.com",
+      from: process.env.EMAIL,
       subject: `Sorry to see you go ${name}`,
       text: "We hope you comeback bro! ",
     };
