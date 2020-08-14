@@ -2,6 +2,10 @@
 
 ---
 
+### npm run test
+
+- to run 2 test suites for both routers.
+
 ### _This repository contains :_
 
 - **MongoDB** database with two models [User , Task].
