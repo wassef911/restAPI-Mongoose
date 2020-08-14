@@ -10,15 +10,14 @@ const auth = async (req, res, next) => {
       _id: decoded._id,
       "tokens.token": token,
     });
-    if (!user) throw new Error();
+    if (!user) throw new Error("Please Authenticate.");
     req.user = user;
     req.token = token;
     console.log("Authentication success.");
     next();
   } catch (err) {
-    return res.status(401).send({ error: "Please Authenticate." });
+    return res.status(401).send({ error: err.message });
   }
-  next();
 };
 
 module.exports = auth;
