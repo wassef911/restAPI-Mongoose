@@ -12,7 +12,7 @@ router.post("/tasks", auth, async (req, res) => {
     const task = await new Task({ ...req.body, owner: req.user._id }).save();
 
     logSUCC("a user added a task.");
-    return res.status(200).send(task);
+    return res.status(201).send(task);
   } catch (err) {
     logERR(err.message);
     return res.status(400).send({ error: err.message });

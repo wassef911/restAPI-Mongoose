@@ -1,22 +1,9 @@
 const request = require("supertest");
 
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-
+const { userOneID, userOne, populateTestDB } = require("./fixtures/db");
 const app = require("../src/app");
 const User = require("../src/db/models/user");
 
-const userOneID = mongoose.Types.ObjectId();
-const userOne = {
-  _id: userOneID,
-  name: "testName1",
-  email: "testEmail1@gmail.com",
-  password: "45oui5!",
-  age: 22,
-  tokens: [
-    { token: jwt.sign({ _id: userOneID.toString() }, process.env.JWT_KEY) },
-  ],
-};
 const aNewUser = {
   name: "testName2",
   email: "testEmail2@gmail.com",
@@ -24,10 +11,7 @@ const aNewUser = {
   age: 21,
 };
 
-beforeEach(async () => {
-  await User.deleteMany();
-  await new User(userOne).save();
-});
+beforeEach(populateTestDB);
 
 test("Should not login nonexisting user", async () => {
   await request(app).post("/users/login").send(aNewUser).expect(400);
