@@ -1,7 +1,7 @@
 const express = require("express");
 
 const auth = require("../db/middleware/auth");
-const Valid = require("../utils");
+const { Valid, logERR, logSUCC } = require("../utils");
 const Task = require("../db/models/tasks");
 
 const router = new express.Router();
@@ -10,19 +10,22 @@ router.post("/tasks", auth, async (req, res) => {
   // add task
   try {
     const task = await new Task({ ...req.body, owner: req.user._id }).save();
-    return res.status(200).send(task);
+
+    logSUCC("a user added a task.");
+    return res.status(201).send(task);
   } catch (err) {
-    res.status(400).send(err);
+    logERR(err.message);
+    return res.status(400).send({ error: err.message });
   }
 });
 
 router.patch("/tasks/:id", auth, async (req, res) => {
   // update task
-  const updates = Object.keys(req.body);
-  if (!Valid(updates, ["description", "completed"]))
-    return res.status(400).send({ error: "Invalid updates!" });
-
   try {
+    const updates = Object.keys(req.body);
+    if (!Valid(updates, ["description", "completed"]))
+      throw new Error("invalid updates on tasks !");
+
     const task = await Task.findOne({
       _id: req.params.id,
       owner: req.user._id,
@@ -30,10 +33,12 @@ router.patch("/tasks/:id", auth, async (req, res) => {
     if (!task) return res.status(404).send(); // if task doesn't existe.
     updates.forEach((update) => (task[update] = req.body[update]));
     await task.save();
-    console.log(task);
-    res.send(task);
+
+    logSUCC("a user updated a task by id.");
+    return res.send(task);
   } catch (err) {
-    return res.status(400).send({ error: err });
+    logERR(err.message);
+    return res.status(400).send({ error: err.message });
   }
 });
 
@@ -57,9 +62,12 @@ router.get("/tasks", auth, async (req, res) => {
         },
       })
       .execPopulate();
+
+    logSUCC("a user fetched all his task.");
     return res.send(req.user.tasks);
   } catch (err) {
-    return res.status(500).send({ error: err });
+    logERR(err.message);
+    return res.status(500).send({ error: err.message });
   }
 });
 
@@ -68,10 +76,12 @@ router.get("/tasks/:id", auth, async (req, res) => {
   const _id = req.params.id;
   try {
     const task = await Task.findOne({ _id, owner: req.user._id });
-    console.log(task);
+
+    logSUCC("a user fetched a task by id.");
     return res.send(task);
   } catch (err) {
-    res.status(500).send(err);
+    logERR(err.message);
+    return res.status(500).send({ error: err.message });
   }
 });
 
@@ -83,11 +93,14 @@ router.delete("/tasks/:id", auth, async (req, res) => {
       _id,
       owner: req.user.id,
     });
-    if (!deletedTask)
-      return res.status(404).send({ error: "Task is not found in the DB . " });
+
+    if (!deletedTask) throw new Error("task is not found in the DB.");
+
+    logSUCC("task has been deleted.");
     return res.send(deletedTask);
   } catch (err) {
-    return res.status(500).send(err);
+    logERR(err.message);
+    return res.status(500).send({ error: err.message });
   }
 });
 

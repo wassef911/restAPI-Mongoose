@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { logERR, logSUCC, logINFO } = require("../../utils");
 
 const User = require("../models/user");
 
@@ -10,15 +11,15 @@ const auth = async (req, res, next) => {
       _id: decoded._id,
       "tokens.token": token,
     });
-    if (!user) throw new Error();
+    if (!user) throw new Error("Please Authenticate.");
     req.user = user;
     req.token = token;
-    console.log("Authentication success.");
+    logINFO("Authentication success.");
     next();
   } catch (err) {
-    return res.status(401).send({ error: "Please Authenticate." });
+    logERR("Authentication error!");
+    return res.status(401).send({ error: err.message });
   }
-  next();
 };
 
 module.exports = auth;
