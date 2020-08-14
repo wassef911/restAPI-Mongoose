@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "env-cmd -f dev.env nodemon src/index.js",
+    "test": "jest --watch",
     "start": "node src/index.js"
   },
   "keywords": [],
@@ -14,6 +15,7 @@
     "@sendgrid/mail": "^7.2.3",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "jest": "^26.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.0",
     "mongoose": "^5.9.27",
