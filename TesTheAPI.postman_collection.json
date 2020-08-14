@@ -1,0 +1,413 @@
+{
+  "info": {
+    "_postman_id": "de1cb8d4-78fa-473b-925d-c2cd3e8bac68",
+    "name": "Task Manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Upload avatar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "avatar",
+              "type": "file",
+              "src": "/home/wassef911/Pictures/me.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url}}/users/me/avatar",
+          "host": ["{{url}}"],
+          "path": ["users", "me", "avatar"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "1e54a725-3661-4745-afed-e429d254bb38",
+            "exec": [
+              "if(pm.response.code === 200){",
+              "    pm.environment.set(\"authToken\",pm.response.json().token)",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\":\"wassef874878@gmail.com\",\n    \"password\" : \"test123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/users/login",
+          "host": ["{{url}}"],
+          "path": ["users", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "a5cb64e3-3efe-4496-a6fa-4b5a7226a677",
+            "exec": [
+              "if(pm.response.code === 200){",
+              "    pm.environment.set(\"authToken\",pm.response.json().token)",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\":\"Wassef\",\n    \"email\":\"wassef2282828@gmail.com\",\n    \"password\":\"test123\",\n    \"age\":21\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/users",
+          "host": ["{{url}}"],
+          "path": ["users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create task",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\":\"test to prod api \",\n    \"completed\":false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/tasks",
+          "host": ["{{url}}"],
+          "path": ["tasks"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout user",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/users/logout",
+          "host": ["{{url}}"],
+          "path": ["users", "logout"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout user all tokens",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/users/logoutAll",
+          "host": ["{{url}}"],
+          "path": ["users", "logoutAll"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get avatar",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "062bc542-66a3-4fc6-87b8-26b0ca95f639",
+            "exec": [
+              "if(pm.response.code === 200){",
+              "    pm.environment.set(\"authToken\",pm.response.json().token)",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\":\"Wassef\",\n    \"email\":\"1.wassef911@gmail.com\",\n    \"password\":\"test123\",\n    \"age\":21\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/users/:id/avatar",
+          "host": ["{{url}}"],
+          "path": ["users", ":id", "avatar"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "5f31f44b78298e554604520c"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer ",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{url}}/users/me",
+          "host": ["{{url}}"],
+          "path": ["users", "me"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read tasks",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/tasks?limit=2&skip=0&sortBy=createdAt:desc",
+          "host": ["{{url}}"],
+          "path": ["tasks"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "2"
+            },
+            {
+              "key": "skip",
+              "value": "0"
+            },
+            {
+              "key": "sortBy",
+              "value": "createdAt:desc"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read task by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/tasks/:id",
+          "host": ["{{url}}"],
+          "path": ["tasks", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "5f30d0c1f06be35a8527f3c5"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update user",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"age\":\"21\",\n    \"email\":\"wassef@mail.tn\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/users/me",
+          "host": ["{{url}}"],
+          "path": ["users", "me"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update task by id",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\" :\"do some stuff\",\n    \"completed\" : false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/tasks/:id",
+          "host": ["{{url}}"],
+          "path": ["tasks", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "5f30d0c1f06be35a8527f3c5"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete avatar",
+      "protocolProfileBehavior": {
+        "strictSSL": true
+      },
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/users/me/avatar",
+          "host": ["{{url}}"],
+          "path": ["users", "me", "avatar"],
+          "query": [
+            {
+              "key": "",
+              "value": "",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete  task by id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\" :\"do some stuff\",\n    \"completed\" : false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/tasks/:id",
+          "host": ["{{url}}"],
+          "path": ["tasks", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "5f30d0b1f06be35a8527f3c2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete  user",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/users/me",
+          "host": ["{{url}}"],
+          "path": ["users", "me"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "f0a45151-ca15-46bb-a62e-88f770c36e23",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "6620783d-6f84-4c30-a545-c0d2722fb741",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
