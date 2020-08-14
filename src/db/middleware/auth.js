@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { logERR, logSUCC, logINFO } = require("../../utils");
 
 const User = require("../models/user");
 
@@ -13,9 +14,10 @@ const auth = async (req, res, next) => {
     if (!user) throw new Error("Please Authenticate.");
     req.user = user;
     req.token = token;
-    console.log("Authentication success.");
+    logINFO("Authentication success.");
     next();
   } catch (err) {
+    logERR("Authentication error!");
     return res.status(401).send({ error: err.message });
   }
 };
