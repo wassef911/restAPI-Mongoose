@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "env-cmd -f config/dev.env nodemon src/index.js",
-    "test": "env-cmd -f config/test.env jest --watch",
+    "test": "env-cmd -f config/test.env jest --watch --runInBand",
     "start": "node src/index.js"
   },
   "jest": {
