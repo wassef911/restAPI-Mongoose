@@ -4,7 +4,7 @@
 
 ### npm run test
 
-- to run 2 test suites for both routers.
+- to run test suites for both routers.[ __JEST__ , __SuperTest__]
 
 ### _This repository contains :_
 
