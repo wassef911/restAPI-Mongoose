@@ -23,4 +23,6 @@
 - Avatar image upload _(png only)_ with 1mb size stored as binary buffer using **multer** .
 
 - Image croping with **sharp** .
-  ![Admin Dashboard](./adminbro.png?raw=true "Dashboard")
+
+  ![Swagger UI](./screen1.png?raw=true "swagger")
+  ![Admin Dashboard](./screen2.png?raw=true "Dashboard")
