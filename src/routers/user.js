@@ -52,33 +52,37 @@ router.delete("/users/me/avatar", auth, async (req, res) => {
   }
 });
 
-router.post("/users/me/avatar", upload.single("avatar"), async (req, res) => {
-  // upload profile picture
-  try {
-    // auth without the middleware
-    const token = req.header("Authorization").replace("Bearer ", "");
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    let user = await User.findOne({
-      _id: decoded._id,
-      "tokens.token": token,
-    });
-    if (!user) throw new Error("Please Authenticate.");
+router.post(
+  "/users/me/avatarpic",
+  upload.single("avatar"),
+  async (req, res) => {
+    // upload profile picture
+    try {
+      // auth without the middleware
+      const token = req.header("Authorization").replace("Bearer ", "");
+      const decoded = jwt.verify(token, process.env.JWT_KEY);
+      let user = await User.findOne({
+        _id: decoded._id,
+        "tokens.token": token,
+      });
+      if (!user) throw new Error("Please Authenticate.");
 
-    const buffer = await sharp(req.file.buffer)
-      .resize({ width: 250, height: 250 })
-      .png()
-      .toBuffer();
+      const buffer = await sharp(req.file.buffer)
+        .resize({ width: 250, height: 250 })
+        .png()
+        .toBuffer();
 
-    user.avatar = buffer;
-    await user.save();
+      user.avatar = buffer;
+      await user.save();
 
-    logSUCC("a profile picture as been uploaded");
-    return res.status(200).send();
-  } catch (err) {
-    logERR(err.message);
-    return res.status(400).send({ error: err.message });
+      logSUCC("a profile picture as been uploaded");
+      return res.status(200).send();
+    } catch (err) {
+      logERR(err.message);
+      return res.status(400).send({ error: err.message });
+    }
   }
-});
+);
 
 router.get("/users/me", auth, async (req, res) => {
   // get user profile

@@ -18,10 +18,9 @@
 
 - User authentication middleware using **jasonwebtoken** .
 
-- Environment variables **env-cmd** .
-
 - Sending emails to users after creating/deleting accounts.
 
 - Avatar image upload _(png only)_ with 1mb size stored as binary buffer using **multer** .
 
 - Image croping with **sharp** .
+  ![Admin Dashboard](./adminbro.png?raw=true "Dashboard")

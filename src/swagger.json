@@ -1,0 +1,228 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Example API",
+    "description": "Week 8 of 100 Days of Code. [repo](https://github.com/wassef911/restAPI-Mongoose)",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "rest-api911.herokuapp.com/",
+      "description": "Main (production) server"
+    },
+    {
+      "url": "rest-api911dev.herokuapp.com/",
+      "description": "Internal staging server for testing"
+    }
+  ],
+  "paths": {
+    "/users/:id/avatar": {
+      "get": {
+        "tag":"user",
+        "summary": "get a user profile pictures by id.",
+        "responses": {
+          "200": {
+            "description": "img",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "link": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me/avatar": {
+      "delete": {
+        "summary": "delete my profile picture.",
+        "tag":"user",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me/avatarpic": {
+      "post": {
+        "summary": "update my profile picture.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "summary": "get my profile.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete user account and send him an e-mail.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "update user account and.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "create a new user and send him welcome e-mail.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "user login.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "user logout.",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logoutAll": {
+      "post": {
+        "summary": "user logout from all accounts, revoke all auth tokens",
+        "responses": {
+          "200": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "json",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
