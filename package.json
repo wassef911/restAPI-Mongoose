@@ -30,7 +30,7 @@
     "sharp": "^0.25.4",
     "supertest": "^4.0.2",
     "tslib": "^2.3.0",
-    "validator": "^13.1.1",
+    "validator": "^13.7.0",
     "jest": "^26.4.0"
   },
   "devDependencies": {
